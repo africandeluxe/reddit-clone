@@ -1,5 +1,7 @@
 "use client";
+
 import { fetchPostsWithRelationships } from "../../utils/supabase/queries";
+import Header from "@/components/Header";
 
 const Home = async () => {
   let posts = [];
@@ -17,9 +19,7 @@ const Home = async () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
-      <header className="bg-redditOrange text-white p-4 shadow-md">
-        <h1 className="text-2xl font-bold text-center">Reddit Clone</h1>
-      </header>
+      <Header />
 
       <main className="flex-grow p-4 md:p-8 max-w-4xl mx-auto">
         {posts.length > 0 ? (

@@ -1,37 +1,33 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { supabase } from "../../utils/supabase/client";
+
 const CreatePost = () => {
-  const supabase = createClient();
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [user, setUser] = useState(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const { user } = await supabase.auth.getUser();
-    if (!user) return alert("You must be logged in!");
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data } = await supabase.auth.getUser();
+      setUser(data.user);
+    };
 
-    const { error } = await supabase
-      .from("posts")
-      .insert([{ title, content, slug: title.toLowerCase().replace(/\s+/g, "-"), user_id: user.id }]);
-    if (error) alert(error.message);
-    else alert("Post created successfully!");
-  };
+    fetchUser();
+  }, []);
+
+  if (!user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-red-500 font-bold">You must be logged in to create a post.</p>
+      </div>
+    );
+  }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        required
-      />
-      <textarea
-        placeholder="Content"
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        required
-      />
-      <button type="submit">Create Post</button>
-    </form>
+    <div className="p-4 max-w-4xl mx-auto">
+      <h1 className="text-2xl font-bold mb-4">Create a New Post</h1>
+      {/* Add your create post form here */}
+    </div>
   );
 };
 
