@@ -19,7 +19,7 @@ const Home = async () => {
         <h1 className="text-2xl font-bold">Reddit Clone</h1>
       </header>
 
-      <main className="p-8 max-w-4xl mx-auto">
+      <main className="flex-grow p-4 md:p-8 max-w-4xl mx-auto">
         {posts.map((post) => (
           <div key={post.id} className="bg-white rounded-lg shadow p-4 mb-4">
             <h2 className="text-lg font-semibold">{post.title}</h2>
@@ -42,6 +42,12 @@ const Home = async () => {
           </div>
         ))}
       </main>
+
+      <footer className="bg-gray-800 text-white py-4">
+        <div className="max-w-5xl mx-auto text-center text-sm">
+          © 2024 Reddit Clone. All rights reserved.
+        </div>
+      </footer>
     </div>
   );
 };
