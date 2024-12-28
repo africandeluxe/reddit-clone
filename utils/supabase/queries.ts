@@ -23,3 +23,19 @@ export const createPost = async (title: string, content: string, user_id: string
     .insert([{ title, content, slug, user_id }]);
   if (error) throw new Error(error.message);
 };
+
+export const fetchPostsWithRelationships = async () => {
+  const { data, error } = await supabase
+    .from("posts")
+    .select(`
+      *,
+      comments(*),
+      users(*)
+    `);
+
+  if (error) {
+    console.error("Error fetching posts:", error.message);
+    throw error;
+  }
+  return data || [];
+};

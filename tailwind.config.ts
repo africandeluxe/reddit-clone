@@ -1,7 +1,14 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
+  content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        redditOrange: "#FF4500",
+        redditDark: "#1A1A1B",
+        redditLight: "#D7DADC",
+      },
+    },
   },
   plugins: [],
 };
