@@ -1,24 +1,46 @@
 import { supabase } from "./client";
 
 export const signUp = async (email: string, password: string) => {
-  const { user, error } = await supabase.auth.signUp({
-    email,
-    password,
-  });
-  if (error) throw new Error(error.message);
-  return user;
+  try {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+
+    if (error) {
+      console.error("Sign Up Error:", error.message);
+      throw new Error(error.message);
+    }
+
+    return data.user;
+  } catch (err: any) {
+    throw new Error(`Sign-up failed: ${err.message}`);
+  }
 };
 
 export const logIn = async (email: string, password: string) => {
-  const { user, error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
-  if (error) throw new Error(error.message);
-  return user;
+
+  if (error) {
+    console.error("Login Error:", error?.message || "Unknown error occurred");
+    throw new Error(error?.message || "Login failed");
+  }
+
+  return data?.user;
 };
 
 export const logOut = async () => {
-  const { error } = await supabase.auth.signOut();
-  if (error) throw new Error(error.message);
+  try {
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+      console.error("Logout Error:", error.message);
+      throw new Error(error.message);
+    }
+  } catch (err: any) {
+    throw new Error(`Logout failed: ${err.message}`);
+  }
 };

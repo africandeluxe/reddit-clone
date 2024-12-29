@@ -1,8 +1,5 @@
-import { createClient } from "./client";
+import { supabase } from "./client";
 import { Database } from "./database.types";
-
-
-const supabase = createClient();
 
 export const fetchPosts = async () => {
   const { data, error } = await supabase.from("posts").select("*");
@@ -10,7 +7,7 @@ export const fetchPosts = async () => {
   return data;
 };
 
-const createPost = async (title: string, content: string, userId: string) => {
+export const createPost = async (title: string, content: string, userId: string) => {
   const { data, error } = await supabase
     .from("posts")
     .insert([
@@ -21,7 +18,7 @@ const createPost = async (title: string, content: string, userId: string) => {
   return data;
 };
 
-const updatePost = async (postId: string, title: string, content: string) => {
+export const updatePost = async (postId: string, title: string, content: string) => {
   const { data, error } = await supabase
     .from("posts")
     .update({ title, content })
@@ -31,7 +28,7 @@ const updatePost = async (postId: string, title: string, content: string) => {
   return data;
 };
 
-const deletePost = async (postId: string) => {
+export const deletePost = async (postId: string) => {
   const { data, error } = await supabase
     .from("posts")
     .delete()
@@ -41,7 +38,7 @@ const deletePost = async (postId: string) => {
   return data;
 };
 
-const fetchComments = async (postId: string) => {
+export const fetchComments = async (postId: string) => {
   const { data, error } = await supabase
     .from("comments")
     .select("*")
@@ -51,7 +48,7 @@ const fetchComments = async (postId: string) => {
   return data || [];
 };
 
-const createComment = async (content: string, postId: string, userId: string) => {
+export const createComment = async (content: string, postId: string, userId: string) => {
   const { data, error } = await supabase
     .from("comments")
     .insert([
@@ -62,7 +59,7 @@ const createComment = async (content: string, postId: string, userId: string) =>
   return data;
 };
 
-const deleteComment = async (commentId: string) => {
+export const deleteComment = async (commentId: string) => {
   const { data, error } = await supabase
     .from("comments")
     .delete()
@@ -77,7 +74,6 @@ export const fetchPostBySlug = async (slug: string) => {
   if (error) throw new Error(error.message);
   return data;
 };
-
 
 export const fetchPostsWithRelationships = async () => {
   const { data, error } = await supabase
